@@ -1,5 +1,5 @@
 from django.template import loader
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
@@ -9,6 +9,12 @@ from .models import Question, Choice
 
 
 def index(request):
+	"""
+    Get questions and display them.
+
+    :param request: HttpRequest object
+    :return: Rendered HTML page displaying the latest questions
+    """
 	latest_question_list = Question.objects.order_by('id')
 	context = {'latest_question_list': latest_question_list}
 	return render(request, 'polls/index.html', context)
@@ -17,6 +23,13 @@ def index(request):
 
 
 def detail(request, question_id):
+	"""
+    Show specific question and choices.
+
+    :param request: HttpRequest object
+    :param question_id: ID of the question to display
+    :return: Rendered HTML page displaying the details of a specific question
+    """
 	try:
 		question = Question.objects.get(pk = question_id)
 	except Question.DoesNotExist:
@@ -27,6 +40,13 @@ def detail(request, question_id):
 
 
 def results(request, question_id):
+	"""
+    Get question and display results.
+
+    :param request: HttpRequest object
+    :param question_id: ID of the question to display results for
+    :return: Rendered HTML page displaying the results of a specific question
+    """
 	question = get_object_or_404(Question, pk = question_id)
 	return render(request, 'polls/results.html', {'question': question})
 
@@ -34,7 +54,14 @@ def results(request, question_id):
 
 
 def vote(request, question_id):
-	# print(request.POST['choice'])
+	"""
+    Vote for a question choice.
+
+    :param request: HttpRequest object
+    :param question_id: ID of the question to vote for
+    :return: HttpResponseRedirect to the results page after voting
+    """
+	
 	question = get_object_or_404(Question, pk = question_id)
 	try:
 		selected_choice = question.choice_set.get(pk = request.POST['choice'])

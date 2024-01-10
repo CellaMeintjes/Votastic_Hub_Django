@@ -3,6 +3,22 @@ from django.contrib.auth.models  import User
 from django import forms
 
 class RegisterUserForm(UserCreationForm):
+    """
+    Form for user registration, extending the UserCreationForm.
+
+    Fields:
+        email (EmailField): User's email address.
+        first_name (CharField): User's first name.
+        last_name (CharField): User's last name.
+
+    Meta:
+        model (User): The User model.
+        fields (tuple): Fields to include in the form.
+
+    Methods:
+        __init__(): Constructor to customize form field attributes.
+    """
+
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control'}))
     first_name = forms.CharField(max_length=50 ,widget=forms.TextInput(attrs={'class':'form-control'}))
     last_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class':'form-control'}))
@@ -12,6 +28,9 @@ class RegisterUserForm(UserCreationForm):
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
 
     def __init__(self,*args, **kwargs):
+        """
+        Constructor to customize form field attributes.
+        """
         super(RegisterUserForm, self).__init__(*args,**kwargs)
         self.fields['username'].widget.attrs['class'] = 'form-control'
         self.fields['password1'].widget.attrs['class'] = 'form-control'
