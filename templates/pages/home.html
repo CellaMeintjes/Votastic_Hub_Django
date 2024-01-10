@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class="card text-center">
+	<div class="card-body">
+		<h1>Welcome To Votastic Hub</h1>
+		<p>This is a Voting Application where students can vote for their prefects!</p>
+		<a class="btn btn-dark" href="{% url 'blog' %}">
+			View Candidates</a>
+	</div>
+</div>
+{% else %}
+<div class="card text-center">
+	<div class="card-body">
+		<h1>Welcome To Votastic Hub</h1>
+		<br/>
+		<p>This is a Voting Application where students can vote for their prefects!</p>
+		<br/>
+		<a class="btn btn-dark" href="{% url 'login' %}">
+			Login to view candidates</a>
+	</div>
+</div>
+
+{% endif %}
+<br/><br/>
+{% endblock %}

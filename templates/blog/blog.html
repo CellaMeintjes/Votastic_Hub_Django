@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="shadow p-4 mb-5 bg-body rounded" style="background-color: #41729f;">
+    {% for post in object_list %}
+    <div class="shadow p-4 mb-5 bg-body rounded" style="background-color: #c3e0e5;">
+        <h5>Candidate:  <a href="/blog/{{post.id}}">{{post.title}}</a></h5>
+    </div>
+        {% if post.header_image %}
+        <img src="{{ post.header_image.url }}">
+        <br/><br/>
+        {% endif %}
+    {% endfor %}
+    <br/>
+    <br/>
+    <h4>Click here to vote:</h4>
+		<a class="btn btn-dark" href="{% url 'polls:index' %}">
+			Vote Now!</a>
+</div>
+<br/><br/>
+{% endblock %}
